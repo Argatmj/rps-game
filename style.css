@@ -1,0 +1,42 @@
+.content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.content .choices{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin: 32px;
+}
+
+button{
+    object-fit: cover;
+    height: 125px;
+    width: 125px;
+    border-radius: 50%;
+}
+
+.info{
+    border: 2px solid black;
+    height: 225px;
+    width: 550px;
+}
+
+.score{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.sub-score{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 150px;
+}
