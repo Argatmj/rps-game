@@ -4,11 +4,6 @@ function getComputerChoice(){
     return choices[num]; 
 }
 
-function getHumanChoice(){
-    let humanChoice = prompt("Choice : rock, paper, sciccors.")
-    return humanChoice;
-}
-
 function playRound(HumanChoice,ComputerChoice){
     let humanChoice = HumanChoice.toLowerCase();
     
@@ -29,30 +24,64 @@ function playRound(HumanChoice,ComputerChoice){
     }
 }
 
-function playGame(){
-    let humanScore = 0;
-    let ComputerScore = 0;
-    for(let i = 0; i < 5 ; i++){
-        const computer = getComputerChoice();
-        const human = getHumanChoice();
-        let result = playRound(human,computer);
-        
-        if(result.includes("win!")){
-            humanScore++;
-        }else if(result.includes("lose!")){
-            ComputerScore++;
-        }
-
-        console.log(result);
-        console.log(`Current Scores - Human: ${humanScore}, Computer: ${ComputerScore}`);
-    }
-
-    console.log(`Final Scores - Human: ${humanScore}, Computer: ${ComputerScore}`);
-    if (humanScore > ComputerScore) {
-        console.log('Human wins the game!');
-    } else if (ComputerScore > humanScore) {
-        console.log('Computer wins the game!');
-    } else {
-        console.log('The game is a tie!');
-    }
+function updateInfo(result){
+    const container = document.querySelector(".info")
+    container.textContent = result;
 }
+
+function updateScore(result){
+    const human = document.getElementById("human-score")
+    const computer = document.getElementById("computer-score")
+
+    let humanScore = parseInt(human.textContent);
+    let ComputerScore = parseInt(computer.textContent);
+
+    if(result.includes("win")){
+        humanScore++;
+    }else if(result.includes("lose")){
+        ComputerScore++;
+    }
+
+    human.textContent = humanScore;
+    computer.textContent = ComputerScore;
+
+    if(humanScore === 5){
+        return 'win';
+    }else if (ComputerScore === 5){
+        return 'lose';
+    }
+    
+}
+
+function reset(text){
+    const human = document.getElementById("human-score")
+    const computer = document.getElementById("computer-score")
+    const container = document.querySelector(".info")
+    
+    container.innerHTML = text;
+    human.textContent = 0;
+    computer.textContent = 0;
+}
+
+
+function playGame(){
+    const buttons = document.querySelectorAll(".choices button");
+    let humanChoice;
+    let ComputerChoice;
+    buttons.forEach( button => {
+        button.addEventListener("click", () => {
+        humanChoice = button.className;
+        ComputerChoice = getComputerChoice();
+        let result = playRound(humanChoice,ComputerChoice);
+        updateInfo(result);
+        let final = updateScore(result);
+        if(final.includes("win")){
+            reset("Yay! You won the game!");
+        }else if(final.includes("lose")){
+            reset("Ohh nooo! You lost the game!");
+        }
+        });
+    });
+}
+
+playGame();
